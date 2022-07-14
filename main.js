@@ -12,9 +12,13 @@ function computerPlay() {
 }
 
 function gamePlay(playerSelection, computerSelection) {
-  // Transform case to allow case-insensitive user input
-  playerSelection = playerSelection.toLowerCase();
-
+  // Check if user actually gave some input
+  if (playerSelection) {
+    // Transform case to allow case-insensitive user input
+    playerSelection = playerSelection.toLowerCase();
+  } else {
+    return "No user input found! Aborting";
+  }
   // Check if playerSelection is valid gameOption
   if (gameOptions.includes(playerSelection)) {
     // Log out picked options for debugging
