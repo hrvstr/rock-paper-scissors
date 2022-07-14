@@ -11,6 +11,7 @@ function computerPlay() {
   return gameOptions[randomNumber(gameOptions.length)];
 }
 
+// Capitalize the first letter in a string
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -91,7 +92,7 @@ function game(rounds, auto = false) {
       // Let the computer play against itself for easier testing
       gameResults = gamePlay(computerPlay(), computerPlay());
     } else {
-      // Regular game with user input, comment
+      // Regular game with user input
       let playerSelection = prompt("Pick a rock, paper or scissors!");
       gameResults = gamePlay(playerSelection, computerPlay());
     }
@@ -114,9 +115,13 @@ function game(rounds, auto = false) {
     console.log("Computer has won the match. Condolences!");
   } else if (playerWinCount == computerWinCount) {
     console.log("No winner for this round. Please repeat!");
-    // if (confirm("Repeat match?")) {
-    //   game(rounds, auto);
-    // }
+    if (auto) {
+      game(rounds, auto);
+    } else {
+      if (confirm("Repeat match?")) {
+        game(rounds, auto);
+      }
+    }
   }
 }
 
