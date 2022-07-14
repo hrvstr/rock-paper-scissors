@@ -11,6 +11,10 @@ function computerPlay() {
   return gameOptions[randomNumber(gameOptions.length)];
 }
 
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function gamePlay(playerSelection, computerSelection) {
   // Check if user actually gave some input
   if (playerSelection) {
@@ -19,6 +23,8 @@ function gamePlay(playerSelection, computerSelection) {
   } else {
     return "No user input found! Aborting...";
   }
+  let playerHasWon;
+  let computerHasWon;
   // Check if playerSelection is valid gameOption
   if (gameOptions.includes(playerSelection)) {
     // Rock
@@ -28,12 +34,12 @@ function gamePlay(playerSelection, computerSelection) {
       playerSelection == gameOptions[0] &&
       computerSelection == gameOptions[1]
     ) {
-      return "You loose! Paper beats rock.";
+      computerHasWon = true;
     } else if (
       playerSelection == gameOptions[0] &&
       computerSelection == gameOptions[2]
     ) {
-      return "You win! Rock beats scissors.";
+      playerHasWon = true;
     }
 
     // Paper
@@ -41,12 +47,12 @@ function gamePlay(playerSelection, computerSelection) {
       playerSelection == gameOptions[1] &&
       computerSelection == gameOptions[0]
     ) {
-      return "You win! Paper beats rock.";
+      playerHasWon = true;
     } else if (
       playerSelection == gameOptions[1] &&
       computerSelection == gameOptions[2]
     ) {
-      return "You loose! Scissors beats paper.";
+      computerHasWon = true;
     }
 
     // Scissors
@@ -54,28 +60,44 @@ function gamePlay(playerSelection, computerSelection) {
       playerSelection == gameOptions[2] &&
       computerSelection == gameOptions[0]
     ) {
-      return "You loose! Rock beats scissors.";
+      computerHasWon = true;
     } else if (
       playerSelection == gameOptions[2] &&
       computerSelection == gameOptions[1]
     ) {
-      return "You win! Scissors beats paper.";
+      playerHasWon = true;
+    }
+
+    if (playerHasWon) {
+      return `You win! ${capitalize(
+        playerSelection
+      )} beats ${computerSelection}.`;
+    } else if (computerHasWon) {
+      return `You loose! ${capitalize(
+        computerSelection
+      )} beats ${playerSelection}.`;
     }
   } else {
-    return "Invalid game option";
+    return "Invalid game option: " + playerSelection;
   }
 }
 
-function game(rounds) {
+function game(rounds, auto = false) {
+  let gameResults;
   let playerWinCount = 0;
   let computerWinCount = 0;
   for (i = rounds; i > 0; i--) {
-    // let playerSelection = prompt("Pick a rock, paper or scissors!");
-    // let gameResults = gamePlay(playerSelection, computerPlay());
+    if (auto) {
+      // Let the computer play against itself for easier testing
+      gameResults = gamePlay(computerPlay(), computerPlay());
+    } else {
+      // Regular game with user input, comment
+      let playerSelection = prompt("Pick a rock, paper or scissors!");
+      gameResults = gamePlay(playerSelection, computerPlay());
+    }
 
-    // Let the computer play against itself for easier testing
-    let gameResults = gamePlay(computerPlay(), computerPlay());
     console.log(gameResults);
+
     if (gameResults.includes("win")) {
       playerWinCount++;
     } else if (gameResults.includes("loose")) {
@@ -92,12 +114,10 @@ function game(rounds) {
     console.log("Computer has won the match. Condolences!");
   } else if (playerWinCount == computerWinCount) {
     console.log("No winner for this round. Please repeat!");
-    if (confirm("Repeat match?")) {
-      game(5);
-    }
+    // if (confirm("Repeat match?")) {
+    //   game(rounds, auto);
+    // }
   }
 }
 
-game(5);
-
-// console.log(gamePlay(computerPlay(), computerPlay()));
+game(5, true);
