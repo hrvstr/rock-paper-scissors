@@ -17,14 +17,10 @@ function gamePlay(playerSelection, computerSelection) {
     // Transform case to allow case-insensitive user input
     playerSelection = playerSelection.toLowerCase();
   } else {
-    return "No user input found! Aborting";
+    return "No user input found! Aborting...";
   }
   // Check if playerSelection is valid gameOption
   if (gameOptions.includes(playerSelection)) {
-    // Log out picked options for debugging
-    console.log(`player: ${playerSelection}`);
-    console.log(`cpu: ${computerSelection}`);
-
     // Rock
     if (
       playerSelection == gameOptions[0] &&
@@ -86,10 +82,36 @@ function gamePlay(playerSelection, computerSelection) {
 }
 
 function game(rounds) {
+  let playerWinCount = 0;
+  let computerWinCount = 0;
   for (i = rounds; i > 0; i--) {
     let playerSelection = prompt("Pick a rock, paper or scissors!");
-    console.log(gamePlay(playerSelection, computerPlay()));
-    console.log("===");
+    let gameResults = gamePlay(playerSelection, computerPlay());
+
+    // Let the computer play against itself for easier testing
+    //let gameResults = gamePlay(computerPlay(), computerPlay());
+    console.log(gameResults);
+    if (gameResults.includes("win")) {
+      playerWinCount++;
+    } else if (gameResults.includes("loose")) {
+      computerWinCount++;
+    }
+  }
+
+  // Check who has won the most games in this match
+  console.log("===");
+  console.log(`Player: ${playerWinCount} - Computer: ${computerWinCount}`);
+  if (playerWinCount > computerWinCount) {
+    console.log("Player has won the match. Congrats!");
+  } else if (playerWinCount < computerWinCount) {
+    console.log("Computer has won the match. Condolences!");
+  } else if (playerWinCount == computerWinCount) {
+    console.log("No winner for this round. Please repeat");
+    if (confirm("Repeat match?")) {
+      game(5);
+    }
+  } else {
+    console.log("Something went wrong... ");
   }
 }
 
