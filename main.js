@@ -16,6 +16,7 @@ function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+// Main game logic of a single round
 function gamePlay(playerSelection, computerSelection) {
   // Check if user actually gave some input
   if (playerSelection) {
@@ -83,6 +84,7 @@ function gamePlay(playerSelection, computerSelection) {
   }
 }
 
+// Run a match with a given amount of rounds
 function game(rounds, auto = false) {
   let gameResults;
   let playerWinCount = 0;
@@ -125,4 +127,5 @@ function game(rounds, auto = false) {
   }
 }
 
+// Initialize a game
 game(5, true);
