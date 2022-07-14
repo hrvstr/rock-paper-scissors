@@ -22,10 +22,7 @@ function gamePlay(playerSelection, computerSelection) {
   // Check if playerSelection is valid gameOption
   if (gameOptions.includes(playerSelection)) {
     // Rock
-    if (
-      playerSelection == gameOptions[0] &&
-      computerSelection == gameOptions[0]
-    ) {
+    if (playerSelection == computerSelection) {
       return "Put!";
     } else if (
       playerSelection == gameOptions[0] &&
@@ -47,11 +44,6 @@ function gamePlay(playerSelection, computerSelection) {
       return "You win! Paper beats rock.";
     } else if (
       playerSelection == gameOptions[1] &&
-      computerSelection == gameOptions[1]
-    ) {
-      return "Put!";
-    } else if (
-      playerSelection == gameOptions[1] &&
       computerSelection == gameOptions[2]
     ) {
       return "You loose! Scissors beats paper.";
@@ -68,14 +60,7 @@ function gamePlay(playerSelection, computerSelection) {
       computerSelection == gameOptions[1]
     ) {
       return "You win! Scissors beats paper.";
-    } else if (
-      playerSelection == gameOptions[2] &&
-      computerSelection == gameOptions[2]
-    ) {
-      return "Put!";
     }
-
-    return "No case matched";
   } else {
     return "Invalid game option";
   }
@@ -85,11 +70,11 @@ function game(rounds) {
   let playerWinCount = 0;
   let computerWinCount = 0;
   for (i = rounds; i > 0; i--) {
-    let playerSelection = prompt("Pick a rock, paper or scissors!");
-    let gameResults = gamePlay(playerSelection, computerPlay());
+    // let playerSelection = prompt("Pick a rock, paper or scissors!");
+    // let gameResults = gamePlay(playerSelection, computerPlay());
 
     // Let the computer play against itself for easier testing
-    //let gameResults = gamePlay(computerPlay(), computerPlay());
+    let gameResults = gamePlay(computerPlay(), computerPlay());
     console.log(gameResults);
     if (gameResults.includes("win")) {
       playerWinCount++;
@@ -106,12 +91,10 @@ function game(rounds) {
   } else if (playerWinCount < computerWinCount) {
     console.log("Computer has won the match. Condolences!");
   } else if (playerWinCount == computerWinCount) {
-    console.log("No winner for this round. Please repeat");
+    console.log("No winner for this round. Please repeat!");
     if (confirm("Repeat match?")) {
       game(5);
     }
-  } else {
-    console.log("Something went wrong... ");
   }
 }
 
