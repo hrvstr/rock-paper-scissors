@@ -27,7 +27,7 @@ function gamePlay(playerSelection, computerSelection) {
   }
   let playerHasWon;
   let computerHasWon;
-  // Check if playerSelection is valid gameOption
+  // Check if playerSelection is a valid gameOption
   if (gameOptions.includes(playerSelection)) {
     // Rock
     if (playerSelection == computerSelection) {
@@ -116,7 +116,7 @@ function game(rounds, auto = false) {
   } else if (playerWinCount < computerWinCount) {
     console.log("Computer has won the match. Condolences!");
   } else if (playerWinCount == computerWinCount) {
-    console.log("No winner for this round. Please repeat!");
+    console.log("No winner for this match. Please repeat!");
     if (auto) {
       game(rounds, auto);
     } else {
