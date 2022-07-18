@@ -3,10 +3,10 @@ function randomNumber(num) {
   return Math.floor(Math.random() * num);
 }
 
-// Array of possible gameplay options
+// Array of possible game play options
 let gameOptions = ["rock", "paper", "scissors"];
 
-// Pick a random gameplay option
+// Pick a random game play option
 function computerPlay() {
   return gameOptions[randomNumber(gameOptions.length)];
 }
