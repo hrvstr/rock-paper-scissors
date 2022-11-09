@@ -115,7 +115,6 @@ function gamePlay(playerSelection, computerSelection) {
         playerEmoji.textContent = "😐";
         gameInfo.innerHTML = "No winner for this match. Please repeat!";
       }
-      gameCount = 0;
       gameOptionButtonContainer.style.display = "none";
       restartButton.style.display = "block";
     }
