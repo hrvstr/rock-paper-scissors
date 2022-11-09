@@ -1,3 +1,7 @@
+:root {
+  --radius: 0.5rem;
+}
+
 body {
   background-color: #1b1c1d;
   color: #d9e5f2;
@@ -12,11 +16,28 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2rem;
 }
 
 #game-info {
-  margin-bottom: 3rem;
-  font-size: 2rem;
+  /* font-size: 1.5rem; */
+}
+
+#score {
+  background: #000000;
+  border: 6px solid #505559;
+  border-radius: var(--radius);
+  padding: 1rem 3rem;
+  font-size: 5rem;
+  font-family: monospace;
+}
+
+#score span {
+  font-weight: 900;
+}
+
+#score-seperator {
+  opacity: 0.25;
 }
 
 .game-options {
@@ -26,9 +47,14 @@ body {
 
 /* Buttons */
 
+#restart {
+  display: none;
+  background: #27c21f;
+}
+
 button {
   all: unset;
-  border-radius: 0.25rem;
+  border-radius: var(--radius);
   background: #505559;
   color: white;
   font-weight: 600;

@@ -1,3 +1,17 @@
+// Score
+const playerWinCount = document.getElementById("player-score");
+const computerWinCount = document.getElementById("computer-score");
+const playerEmoji = document.getElementById("player-emoji");
+const computerEmoji = document.getElementById("computer-emoji");
+
+// Buttons
+const gameOptionButtonContainer = document.querySelector(".game-options");
+const gameOptionButtons = document.querySelectorAll(".game-options button");
+const restartButton = document.getElementById("restart");
+
+// Text
+const gameInfo = document.getElementById("game-info");
+
 // Pick a random number from a given range 'num'
 function randomNumber(num) {
   return Math.floor(Math.random() * num);
@@ -17,22 +31,25 @@ function capitalize(string) {
 }
 
 // Main game logic of a single round
+let gameCount = 0;
 function gamePlay(playerSelection, computerSelection) {
   // Check if user actually gave some input
   if (playerSelection) {
     // Transform case to allow case-insensitive user input
     playerSelection = playerSelection.toLowerCase();
   } else {
-    return "No user input found! Aborting...";
+    console.log("No user input found! Aborting...");
   }
 
   let playerHasWon;
   let computerHasWon;
+  gameCount++;
+
   // Check if playerSelection is a valid gameOption
   if (gameOptions.includes(playerSelection)) {
     // Rock
     if (playerSelection == computerSelection) {
-      return "Put!";
+      isDraw = true;
     } else if (
       playerSelection == gameOptions[0] &&
       computerSelection == gameOptions[1]
@@ -72,71 +89,53 @@ function gamePlay(playerSelection, computerSelection) {
     }
 
     if (playerHasWon) {
-      return `You win! ${capitalize(
+      playerWinCount.textContent++;
+      gameInfo.textContent = `You win! ${capitalize(
         playerSelection
       )} beats ${computerSelection}.`;
     } else if (computerHasWon) {
-      return `You loose! ${capitalize(
+      computerWinCount.textContent++;
+      gameInfo.textContent = `You loose! ${capitalize(
         computerSelection
       )} beats ${playerSelection}.`;
+    } else if (isDraw) {
+      gameInfo.textContent = `Draw! The computer went with ${computerSelection} too.`;
+    }
+
+    if (gameCount == 5) {
+      if (playerWinCount.textContent > computerWinCount.textContent) {
+        gameInfo.textContent = "Player has won the match. Congrats!";
+        playerEmoji.textContent = "😀";
+        computerEmoji.textContent = "💀";
+      } else if (playerWinCount.textContent < computerWinCount.textContent) {
+        playerEmoji.textContent = "🙁";
+        computerEmoji.textContent = "🤡";
+        gameInfo.textContent = "Computer has won the match. Condolences!";
+      } else if (playerWinCount.textContent == computerWinCount.textContent) {
+        playerEmoji.textContent = "😐";
+        gameInfo.innerHTML = "No winner for this match. Please repeat!";
+      }
+      gameCount = 0;
+      gameOptionButtonContainer.style.display = "none";
+      restartButton.style.display = "block";
     }
   } else {
-    return "Invalid game option: " + playerSelection;
+    console.log("Invalid game option: " + playerSelection);
   }
 }
 
-// UI
-const gameInfo = document.getElementById("game-info");
-const gameOptionButtons = document.querySelectorAll(".game-options button");
-
+// Play single round with a given option
 gameOptionButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    gameInfo.textContent = gamePlay(
-      button.textContent.toLowerCase(),
-      computerPlay()
-    );
+    gamePlay(button.textContent.toLowerCase(), computerPlay());
   });
 });
 
-// Run a match with a given amount of rounds
-// function game(rounds, auto = false) {
-//   let gameResults;
-//   let playerWinCount = 0;
-//   let computerWinCount = 0;
-//   for (i = rounds; i > 0; i--) {
-//     if (auto) {
-//       // Let the computer play against itself for easier testing
-//       gameResults = gamePlay(computerPlay(), computerPlay());
-//     } else {
-//       // Regular game with user input
-//       let playerSelection = prompt("Pick a rock, paper or scissors!");
-//       gameResults = gamePlay(playerSelection, computerPlay());
-//     }
-
-//     console.log(gameResults);
-
-//     if (gameResults.includes("win")) {
-//       playerWinCount++;
-//     } else if (gameResults.includes("loose")) {
-//       computerWinCount++;
-//     }
-//   }
-
-//   // Check who has won the most games in this match
-//   console.log("===");
-//   console.log(`Player: ${playerWinCount} - Computer: ${computerWinCount}`);
-//   if (playerWinCount > computerWinCount) {
-//     console.log("Player has won the match. Congrats!");
-//   } else if (playerWinCount < computerWinCount) {
-//     console.log("Computer has won the match. Condolences!");
-//   } else if (playerWinCount == computerWinCount) {
-//     console.log("No winner for this match. Please repeat!");
-//     if (auto) {
-//       game(rounds, auto);
-//     } else {
-//       if (confirm("Repeat match?")) {
-//         game(rounds, auto);
-//       }
-//     }
-//   }
-// }
+// Reset game
+restartButton.addEventListener("click", () => {
+  gameCount = playerWinCount.textContent = computerWinCount.textContent = 0;
+  gameOptionButtonContainer.style.display = "flex";
+  restartButton.style.display = "none";
+  playerEmoji.textContent = "🙂";
+  computerEmoji.textContent = "🤖";
+});

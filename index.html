@@ -9,12 +9,18 @@
   </head>
   <body>
     <div class="container">
-      <div id="game-info">Press a button to start a new game.</div>
+      <div id="score">
+        <span id="player-emoji">🙂</span> <span id="player-score">0</span
+        ><span id="score-seperator">:</span><span id="computer-score">0</span>
+        <span id="computer-emoji">🤖</span>
+      </div>
+      <button id="restart">Restart</button>
       <div class="game-options">
         <button>Rock</button>
         <button>Paper</button>
         <button>Scissors</button>
       </div>
+      <div id="game-info">Press a button to start a new game.</div>
     </div>
     <script src="main.js"></script>
   </body>
