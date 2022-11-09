@@ -19,10 +19,6 @@ body {
   gap: 2rem;
 }
 
-#game-info {
-  /* font-size: 1.5rem; */
-}
-
 #score {
   background: #000000;
   border: 6px solid #505559;
