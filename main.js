@@ -25,6 +25,7 @@ function gamePlay(playerSelection, computerSelection) {
   } else {
     return "No user input found! Aborting...";
   }
+
   let playerHasWon;
   let computerHasWon;
   // Check if playerSelection is a valid gameOption
@@ -84,48 +85,58 @@ function gamePlay(playerSelection, computerSelection) {
   }
 }
 
+// UI
+const gameInfo = document.getElementById("game-info");
+const gameOptionButtons = document.querySelectorAll(".game-options button");
+
+gameOptionButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    gameInfo.textContent = gamePlay(
+      button.textContent.toLowerCase(),
+      computerPlay()
+    );
+  });
+});
+
 // Run a match with a given amount of rounds
-function game(rounds, auto = false) {
-  let gameResults;
-  let playerWinCount = 0;
-  let computerWinCount = 0;
-  for (i = rounds; i > 0; i--) {
-    if (auto) {
-      // Let the computer play against itself for easier testing
-      gameResults = gamePlay(computerPlay(), computerPlay());
-    } else {
-      // Regular game with user input
-      let playerSelection = prompt("Pick a rock, paper or scissors!");
-      gameResults = gamePlay(playerSelection, computerPlay());
-    }
+// function game(rounds, auto = false) {
+//   let gameResults;
+//   let playerWinCount = 0;
+//   let computerWinCount = 0;
+//   for (i = rounds; i > 0; i--) {
+//     if (auto) {
+//       // Let the computer play against itself for easier testing
+//       gameResults = gamePlay(computerPlay(), computerPlay());
+//     } else {
+//       // Regular game with user input
+//       let playerSelection = prompt("Pick a rock, paper or scissors!");
+//       gameResults = gamePlay(playerSelection, computerPlay());
+//     }
 
-    console.log(gameResults);
+//     console.log(gameResults);
 
-    if (gameResults.includes("win")) {
-      playerWinCount++;
-    } else if (gameResults.includes("loose")) {
-      computerWinCount++;
-    }
-  }
+//     if (gameResults.includes("win")) {
+//       playerWinCount++;
+//     } else if (gameResults.includes("loose")) {
+//       computerWinCount++;
+//     }
+//   }
 
-  // Check who has won the most games in this match
-  console.log("===");
-  console.log(`Player: ${playerWinCount} - Computer: ${computerWinCount}`);
-  if (playerWinCount > computerWinCount) {
-    console.log("Player has won the match. Congrats!");
-  } else if (playerWinCount < computerWinCount) {
-    console.log("Computer has won the match. Condolences!");
-  } else if (playerWinCount == computerWinCount) {
-    console.log("No winner for this match. Please repeat!");
-    if (auto) {
-      game(rounds, auto);
-    } else {
-      if (confirm("Repeat match?")) {
-        game(rounds, auto);
-      }
-    }
-  }
-}
-
-// Initialize a game
-game(5, true);
+//   // Check who has won the most games in this match
+//   console.log("===");
+//   console.log(`Player: ${playerWinCount} - Computer: ${computerWinCount}`);
+//   if (playerWinCount > computerWinCount) {
+//     console.log("Player has won the match. Congrats!");
+//   } else if (playerWinCount < computerWinCount) {
+//     console.log("Computer has won the match. Condolences!");
+//   } else if (playerWinCount == computerWinCount) {
+//     console.log("No winner for this match. Please repeat!");
+//     if (auto) {
+//       game(rounds, auto);
+//     } else {
+//       if (confirm("Repeat match?")) {
+//         game(rounds, auto);
+//       }
+//     }
+//   }
+// }
