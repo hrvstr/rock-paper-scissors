@@ -72,3 +72,18 @@ button:hover {
 button:active {
   background: #81888d;
 }
+
+/* Mobile view */
+
+@media (max-width: 768px) {
+  .game-options {
+    justify-content: center;
+    flex-flow: wrap;
+  }
+
+  #score {
+    font-size: 2.5rem;
+    text-align: center;
+    padding: 0.5rem 1rem;
+  }
+}
