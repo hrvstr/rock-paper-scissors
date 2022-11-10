@@ -1,7 +1,7 @@
 :root {
   --primary: #d9e5f2;
   --secondary: #505559;
-  --accent: #2990d9;
+  --accent: #3f638b;
   --background: #1b1c1d;
   --background-dark: #000000;
   --radius: 0.5rem;
@@ -32,10 +32,10 @@ body {
 #score {
   transition: border-color 0.25s ease;
   background: var(--background-dark);
-  border: 6px solid var(--secondary);
+  border: 0.5rem solid var(--secondary);
   border-radius: var(--radius);
   padding: 0.5rem 2rem;
-  font-size: 4rem;
+  font-size: 5rem;
   font-family: var(--monospace);
 }
 
@@ -108,8 +108,8 @@ button span {
 
 @media (max-width: 768px) {
   #score {
-    font-size: 2rem;
-    padding: 0.5rem 1rem;
+    font-size: 2.5rem;
+    padding: 0.25rem 1.5rem;
   }
 
   .game-options {
@@ -119,5 +119,11 @@ button span {
 
   #game-info {
     text-align: center;
+  }
+}
+
+@media (max-width: 320px) {
+  #score {
+    font-size: 1.5rem;
   }
 }

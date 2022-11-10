@@ -94,18 +94,18 @@ function gamePlay(playerSelection, computerSelection) {
     playerHasWon = true;
   }
 
-  const greenBorder = "6px solid #27c21f";
-  const redBorder = "6px solid #ff4545";
-  const yellowBorder = "6px solid #ffc933";
+  // const greenBorder = "6px solid #27c21f";
+  // const redBorder = "6px solid #ff4545";
+  // const yellowBorder = "6px solid #ffc933";
 
   // Random emoji depending on game result
   const playerWinEmojis = ["😀", "😍", "🥹", "😃", "😁", "😆", "😊", "😎"];
   const playerLooseEmojis = ["😤", "😬", "😩", "😫", "😣", "😕", "😒"];
-  const playerDrawEmojis = ["😐", "🤨"];
+  const playerDrawEmojis = ["😐", "🤨", "😑", "🙄", "😮"];
 
-  const computerWinEmojis = ["🤡", "👹", "😈"];
+  const computerWinEmojis = ["🤡", "👹", "😈", "👽"];
   const computerLooseEmojis = ["💀", "👿", "💩"];
-  const computerDrawEmojis = ["🤖", "👾"];
+  const computerDrawEmojis = ["🤖"];
 
   function randomEmoji() {
     if (playerHasWon == true) {
@@ -155,26 +155,29 @@ function gamePlay(playerSelection, computerSelection) {
   if (gameCount == roundAmount) {
     // Player wins
     if (playerWinCount.textContent > computerWinCount.textContent) {
-      scoreBoard.style.border = greenBorder;
+      // scoreBoard.style.border = greenBorder;
       statusMessage.textContent = "Player has won the match. Congrats!";
+      playerHasWon = true;
+      randomEmoji();
     }
     // Computer wins
     else if (playerWinCount.textContent < computerWinCount.textContent) {
-      scoreBoard.style.border = redBorder;
+      // scoreBoard.style.border = redBorder;
       statusMessage.textContent = "Computer has won the match. Condolences!";
+      computerHasWon = true;
+      randomEmoji();
     }
     // Draw
     else if (playerWinCount.textContent == computerWinCount.textContent) {
-      scoreBoard.style.border = yellowBorder;
+      // scoreBoard.style.border = yellowBorder;
       statusMessage.innerHTML = "No winner for this match. Please repeat!";
+      isDraw = true;
+      randomEmoji();
     }
     gameOptionButtonContainer.style.display = "none";
     restartButton.style.display = "block";
     roundCount.textContent = "";
     progress.style.opacity = 0;
-
-    // Random emoji after final round
-    randomEmoji();
   }
 }
 
@@ -193,6 +196,6 @@ restartButton.addEventListener("click", () => {
   playerEmoji.textContent = "🙂";
   computerEmoji.textContent = "🤖";
   statusMessage.textContent = "Press a button to start a new game.";
-  scoreBoard.style.border = "6px solid #505559";
+  // scoreBoard.style.border = "6px solid #505559";
   progressBar.style.width = 0;
 });
