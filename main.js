@@ -12,17 +12,38 @@ const gameOptionButtonContainer = document.querySelector(".game-options");
 const gameOptionButtons = document.querySelectorAll(".game-options button");
 const restartButton = document.getElementById("restart");
 
-// Text
+// Game info
 const statusMessage = document.getElementById("status-message");
 const roundCount = document.getElementById("round-count");
+
+// Colors
+const green = "#27c21f";
+const red = "#ff4545";
+const yellow = "#ffc933";
+const secondary = "#505559";
+
+// Emojis
+const playerWinEmojis = ["😀", "😍", "🥹", "😃", "😁", "😆", "😊", "😎"];
+const playerLooseEmojis = ["😤", "😬", "😩", "😫", "😣", "😕", "😒"];
+const playerDrawEmojis = ["😐", "🤨", "😑", "🙄", "😮"];
+
+const computerWinEmojis = ["🤡", "👹", "😈", "👽"];
+const computerLooseEmojis = ["💀", "👿", "💩"];
+const computerDrawEmojis = ["🤖"];
+
+const gamePlayEmojis = {
+  rock: "✊",
+  paper: "✋",
+  scissors: "✌️",
+};
+
+// Array of possible game play options
+let gameOptions = ["rock", "paper", "scissors"];
 
 // Pick a random number from a given range 'num'
 function randomNumber(num) {
   return Math.floor(Math.random() * num);
 }
-
-// Array of possible game play options
-let gameOptions = ["rock", "paper", "scissors"];
 
 // Pick a random game play option
 function computerPlay() {
@@ -36,7 +57,7 @@ function capitalize(string) {
 
 // Main game logic
 let gameCount = 0;
-const roundAmount = 5;
+const gameCountMax = 5;
 
 function gamePlay(playerSelection, computerSelection) {
   let playerHasWon;
@@ -45,11 +66,11 @@ function gamePlay(playerSelection, computerSelection) {
 
   // Round counter
   gameCount++;
-  roundCount.textContent = `(${gameCount}/${roundAmount})`;
+  roundCount.textContent = `(${gameCount}/${gameCountMax})`;
 
   // Progress bar
   gameCount == 1 ? (progress.style.opacity = 100) : null;
-  progressBar.style.width = (gameCount * 100) / roundAmount + "%";
+  progressBar.style.width = (gameCount * 100) / gameCountMax + "%";
 
   // Draw
   if (playerSelection == computerSelection) {
@@ -94,88 +115,68 @@ function gamePlay(playerSelection, computerSelection) {
     playerHasWon = true;
   }
 
-  // const greenBorder = "6px solid #27c21f";
-  // const redBorder = "6px solid #ff4545";
-  // const yellowBorder = "6px solid #ffc933";
+  // Player wins
+  if (playerHasWon) {
+    scoreBoard.style.borderColor = green;
+    playerWinCount.textContent++;
+    statusMessage.textContent = `You win! ${capitalize(
+      playerSelection
+    )} beats ${computerSelection}.`;
+  }
 
-  // Random emoji depending on game result
-  const playerWinEmojis = ["😀", "😍", "🥹", "😃", "😁", "😆", "😊", "😎"];
-  const playerLooseEmojis = ["😤", "😬", "😩", "😫", "😣", "😕", "😒"];
-  const playerDrawEmojis = ["😐", "🤨", "😑", "🙄", "😮"];
+  // Computer wins
+  else if (computerHasWon) {
+    scoreBoard.style.borderColor = red;
+    computerWinCount.textContent++;
+    statusMessage.textContent = `You loose! ${capitalize(
+      computerSelection
+    )} beats ${playerSelection}.`;
+  }
+  // Draw
+  else if (isDraw) {
+    scoreBoard.style.borderColor = yellow;
+    statusMessage.textContent = `Draw! The computer went with ${computerSelection} too.`;
+  }
 
-  const computerWinEmojis = ["🤡", "👹", "😈", "👽"];
-  const computerLooseEmojis = ["💀", "👿", "💩"];
-  const computerDrawEmojis = ["🤖"];
+  // Display player and computer selection on the score board
+  playerEmoji.textContent = gamePlayEmojis[playerSelection];
+  computerEmoji.textContent = gamePlayEmojis[computerSelection];
 
-  function randomEmoji() {
-    if (playerHasWon == true) {
+  // Display results after 5 rounds
+  if (gameCount == gameCountMax) {
+    // Player wins
+    if (playerWinCount.textContent > computerWinCount.textContent) {
+      scoreBoard.style.borderColor = green;
+      statusMessage.textContent = "Player has won the match. Congrats!";
       playerEmoji.textContent =
         playerWinEmojis[randomNumber(playerWinEmojis.length)];
       computerEmoji.textContent =
         computerLooseEmojis[randomNumber(computerLooseEmojis.length)];
-    } else if (computerHasWon == true) {
+    }
+    // Computer wins
+    else if (playerWinCount.textContent < computerWinCount.textContent) {
+      scoreBoard.style.borderColor = red;
+      statusMessage.textContent = "Computer has won the match. Condolences!";
       playerEmoji.textContent =
         playerLooseEmojis[randomNumber(playerLooseEmojis.length)];
       computerEmoji.textContent =
         computerWinEmojis[randomNumber(computerWinEmojis.length)];
-    } else if (isDraw == true) {
+    }
+    // Draw
+    else if (playerWinCount.textContent == computerWinCount.textContent) {
+      scoreBoard.style.borderColor = yellow;
+      statusMessage.textContent = "No winner for this match. Please repeat!";
       playerEmoji.textContent =
         playerDrawEmojis[randomNumber(playerDrawEmojis.length)];
       computerEmoji.textContent =
         computerDrawEmojis[randomNumber(computerDrawEmojis.length)];
     }
-  }
 
-  // Player wins
-  if (playerHasWon) {
-    playerWinCount.textContent++;
-    statusMessage.textContent = `You win! ${capitalize(
-      playerSelection
-    )} beats ${computerSelection}.`;
-    // scoreBoard.style.border = greenBorder;
-  }
-  // Computer wins
-  else if (computerHasWon) {
-    computerWinCount.textContent++;
-    statusMessage.textContent = `You loose! ${capitalize(
-      computerSelection
-    )} beats ${playerSelection}.`;
-    // scoreBoard.style.border = redBorder;
-  }
-  // Draw
-  else if (isDraw) {
-    statusMessage.textContent = `Draw! The computer went with ${computerSelection} too.`;
-    // scoreBoard.style.border = yellowBorder;
-  }
-
-  // Random emoji after every round
-  randomEmoji();
-
-  // Display results after 5 rounds
-  if (gameCount == roundAmount) {
-    // Player wins
-    if (playerWinCount.textContent > computerWinCount.textContent) {
-      // scoreBoard.style.border = greenBorder;
-      statusMessage.textContent = "Player has won the match. Congrats!";
-      playerHasWon = true;
-      randomEmoji();
-    }
-    // Computer wins
-    else if (playerWinCount.textContent < computerWinCount.textContent) {
-      // scoreBoard.style.border = redBorder;
-      statusMessage.textContent = "Computer has won the match. Condolences!";
-      computerHasWon = true;
-      randomEmoji();
-    }
-    // Draw
-    else if (playerWinCount.textContent == computerWinCount.textContent) {
-      // scoreBoard.style.border = yellowBorder;
-      statusMessage.innerHTML = "No winner for this match. Please repeat!";
-      isDraw = true;
-      randomEmoji();
-    }
+    // Display restart button
     gameOptionButtonContainer.style.display = "none";
     restartButton.style.display = "block";
+
+    // Hide counter and progress
     roundCount.textContent = "";
     progress.style.opacity = 0;
   }
@@ -190,12 +191,12 @@ gameOptionButtons.forEach((button) => {
 
 // Reset game
 restartButton.addEventListener("click", () => {
+  scoreBoard.style.borderColor = secondary;
   gameCount = playerWinCount.textContent = computerWinCount.textContent = 0;
   gameOptionButtonContainer.style.display = "flex";
   restartButton.style.display = "none";
   playerEmoji.textContent = "🙂";
   computerEmoji.textContent = "🤖";
   statusMessage.textContent = "Press a button to start a new game.";
-  // scoreBoard.style.border = "6px solid #505559";
   progressBar.style.width = 0;
 });

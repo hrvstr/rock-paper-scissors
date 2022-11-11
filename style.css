@@ -30,7 +30,7 @@ body {
 }
 
 #score {
-  transition: border-color 0.25s ease;
+  transition: border-color 0.5s;
   background: var(--background-dark);
   border: 0.5rem solid var(--secondary);
   border-radius: var(--radius);
@@ -39,17 +39,23 @@ body {
   font-family: var(--monospace);
 }
 
+#player-score,
+#computer-score {
+  margin: 2rem;
+}
+
 #score span {
   font-weight: bold;
 }
 
 #score-separator {
-  opacity: 0.25;
+  color: var(--secondary);
+  margin: -2rem;
 }
 
 #round-count {
-  margin-left: 0.25rem;
   font-weight: bold;
+  color: var(--secondary);
 }
 
 /* Progress Bar */
@@ -60,7 +66,7 @@ body {
   background: var(--secondary);
   border-radius: var(--radius);
   opacity: 0;
-  transition: opacity 1s ease-out;
+  transition: opacity 1s;
 }
 
 #progress-bar {
@@ -69,7 +75,7 @@ body {
   width: 0;
   background: var(--primary);
   margin-bottom: 1rem;
-  transition: all 0.5s ease-in-out;
+  transition: width 0.5s;
 }
 /* Buttons */
 
@@ -80,6 +86,8 @@ body {
 
 button {
   all: unset;
+  display: flex;
+  align-items: center;
   border-radius: var(--radius);
   background: var(--secondary);
   font-size: 1rem;
@@ -98,6 +106,7 @@ button:hover {
 button span {
   margin-right: 0.5rem;
   font-family: monospace;
+  font-size: 1.5rem;
 }
 
 #restart {
