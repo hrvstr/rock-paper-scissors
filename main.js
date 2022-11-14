@@ -8,8 +8,8 @@ const progress = document.getElementById("progress");
 const progressBar = document.getElementById("progress-bar");
 
 // Buttons
-const gameOptionButtonContainer = document.querySelector(".game-options");
-const gameOptionButtons = document.querySelectorAll(".game-options button");
+const gameOptionButtonContainer = document.getElementById("game-options");
+const gameOptionButtons = document.querySelectorAll("#game-options button");
 const restartButton = document.getElementById("restart");
 
 // Game info
@@ -174,7 +174,7 @@ function gamePlay(playerSelection, computerSelection) {
 
     // Display restart button
     gameOptionButtonContainer.style.display = "none";
-    restartButton.style.display = "block";
+    restartButton.style.display = "flex";
 
     // Hide counter and progress
     roundCount.textContent = "";
